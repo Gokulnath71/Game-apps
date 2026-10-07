@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Ninja Clash</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Main Menu -->
+    <div id="main-menu" class="screen active">
+      <div class="title-container">
+        <h1 class="game-title">NEON NINJA</h1>
+        <h2 class="game-subtitle">CLASH</h2>
+        <div class="title-glow"></div>
+      </div>
+      <nav class="menu-nav">
+        <button class="menu-btn" data-action="quick-fight">Quick Fight</button>
+        <button class="menu-btn" data-action="custom-fight">Custom Fight</button>
+        <button class="menu-btn" data-action="survival">Survival Mode</button>
+        <button class="menu-btn" data-action="training">Training Dojo</button>
+        <button class="menu-btn" data-action="options">Options</button>
+        <button class="menu-btn" data-action="controls">Controls</button>
+      </nav>
+      <p class="version">v1.0 — Press any key to start</p>
+    </div>
+
+    <!-- Character Select -->
+    <div id="char-select" class="screen">
+      <h2 class="screen-title">SELECT YOUR NINJA</h2>
+      <div class="char-grid" id="char-grid-p1"></div>
+      <div class="char-preview" id="char-preview-p1">
+        <div class="preview-stats"></div>
+      </div>
+      <div class="select-actions">
+        <button class="menu-btn secondary" data-action="back-menu">Back</button>
+        <button class="menu-btn" id="confirm-char-p1">Continue</button>
+      </div>
+    </div>
+
+    <!-- P2 / CPU Select -->
+    <div id="opponent-select" class="screen">
+      <h2 class="screen-title" id="opponent-title">SELECT OPPONENT</h2>
+      <div class="char-grid" id="char-grid-p2"></div>
+      <div class="char-preview" id="char-preview-p2">
+        <div class="preview-stats"></div>
+      </div>
+      <div class="select-actions">
+        <button class="menu-btn secondary" data-action="back-char">Back</button>
+        <button class="menu-btn" id="confirm-char-p2">Start Fight!</button>
+      </div>
+    </div>
+
+    <!-- Custom Fight Setup -->
+    <div id="custom-setup" class="screen">
+      <h2 class="screen-title">CUSTOM FIGHT</h2>
+      <div class="setup-grid">
+        <div class="setup-section">
+          <h3>Game Mode</h3>
+          <select id="setup-mode">
+            <option value="vs-cpu">1 Player vs CPU</option>
+            <option value="vs-player">2 Player Local</option>
+            <option value="team">Team Battle (2v2)</option>
+          </select>
+        </div>
+        <div class="setup-section">
+          <h3>Difficulty</h3>
+          <select id="setup-difficulty">
+            <option value="easy">Easy</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Hard</option>
+            <option value="insane">Insane</option>
+          </select>
+        </div>
+        <div class="setup-section">
+          <h3>Arena</h3>
+          <select id="setup-arena">
+            <option value="cyber">Cyber City</option>
+            <option value="dojo">Neon Dojo</option>
+            <option value="void">The Void</option>
+            <option value="temple">Cyber Temple</option>
+            <option value="grid">Neon Grid</option>
+            <option value="storm">Electric Storm</option>
+          </select>
+        </div>
+        <div class="setup-section">
+          <h3>Round Time</h3>
+          <select id="setup-time">
+            <option value="30">30 seconds</option>
+            <option value="60" selected>60 seconds</option>
+            <option value="90">90 seconds</option>
+            <option value="120">120 seconds</option>
+            <option value="999">Unlimited</option>
+          </select>
+        </div>
+        <div class="setup-section">
+          <h3>Rounds to Win</h3>
+          <select id="setup-rounds">
+            <option value="1">1 Round</option>
+            <option value="2" selected>Best of 3</option>
+            <option value="3">Best of 5</option>
+          </select>
+        </div>
+        <div class="setup-section">
+          <h3>Health Multiplier</h3>
+          <select id="setup-health">
+            <option value="0.5">50%</option>
+            <option value="1" selected>100%</option>
+            <option value="1.5">150%</option>
+            <option value="2">200%</option>
+          </select>
+        </div>
+        <div class="setup-section">
+          <h3>Damage Multiplier</h3>
+          <select id="setup-damage">
+            <option value="0.5">Half Damage</option>
+            <option value="1" selected>Normal</option>
+            <option value="1.5">1.5x Damage</option>
+            <option value="2">Double Damage</option>
+          </select>
+        </div>
+        <div class="setup-section">
+          <h3>Special Meter</h3>
+          <select id="setup-meter">
+            <option value="slow">Slow Fill</option>
+            <option value="normal" selected>Normal</option>
+            <option value="fast">Fast Fill</option>
+            <option value="instant">Instant Specials</option>
+          </select>
+        </div>
+      </div>
+      <div class="select-actions">
+        <button class="menu-btn secondary" data-action="back-menu">Back</button>
+        <button class="menu-btn" data-action="start-custom">Select Characters</button>
+      </div>
+    </div>
+
+    <!-- Options Screen -->
+    <div id="options-screen" class="screen">
+      <h2 class="screen-title">OPTIONS</h2>
+      <div class="options-grid">
+        <div class="option-group">
+          <h3>Visual</h3>
+          <label class="option-row">
+            <span>Neon Theme</span>
+            <select id="opt-theme">
+              <option value="cyan-magenta">Cyan & Magenta</option>
+              <option value="green-purple">Green & Purple</option>
+              <option value="orange-blue">Orange & Blue</option>
+              <option value="red-gold">Red & Gold</option>
+              <option value="rainbow">Rainbow Pulse</option>
+            </select>
+          </label>
+          <label class="option-row">
+            <span>Particle Effects</span>
+            <select id="opt-particles">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+              <option value="ultra">Ultra</option>
+            </select>
+          </label>
+          <label class="option-row">
+            <span>Screen Shake</span>
+            <input type="range" id="opt-shake" min="0" max="100" value="70">
+          </label>
+          <label class="option-row">
+            <span>Trail Effects</span>
+            <input type="checkbox" id="opt-trails" checked>
+          </label>
+          <label class="option-row">
+            <span>Hit Flash</span>
+            <input type="checkbox" id="opt-hitflash" checked>
+          </label>
+          <label class="option-row">
+            <span>Background Animation</span>
+            <input type="checkbox" id="opt-bg-anim" checked>
+          </label>
+        </div>
+        <div class="option-group">
+          <h3>Audio</h3>
+          <label class="option-row">
+            <span>Master Volume</span>
+            <input type="range" id="opt-volume" min="0" max="100" value="80">
+          </label>
+          <label class="option-row">
+            <span>Sound Effects</span>
+            <input type="checkbox" id="opt-sfx" checked>
+          </label>
+          <label class="option-row">
+            <span>Music</span>
+            <input type="checkbox" id="opt-music" checked>
+          </label>
+        </div>
+        <div class="option-group">
+          <h3>Gameplay</h3>
+          <label class="option-row">
+            <span>Show Combo Counter</span>
+            <input type="checkbox" id="opt-combo" checked>
+          </label>
+          <label class="option-row">
+            <span>Show Damage Numbers</span>
+            <input type="checkbox" id="opt-damage-num" checked>
+          </label>
+          <label class="option-row">
+            <span>Auto Block Assist</span>
+            <input type="checkbox" id="opt-auto-block">
+          </label>
+          <label class="option-row">
+            <span>Slow Motion on KO</span>
+            <input type="checkbox" id="opt-slowmo" checked>
+          </label>
+          <label class="option-row">
+            <span>Frame Data Display</span>
+            <input type="checkbox" id="opt-framedata">
+          </label>
+        </div>
+      </div>
+      <div class="select-actions">
+        <button class="menu-btn secondary" data-action="back-menu">Back</button>
+        <button class="menu-btn" data-action="save-options">Save Options</button>
+      </div>
+    </div>
+
+    <!-- Controls Screen -->
+    <div id="controls-screen" class="screen">
+      <h2 class="screen-title">CONTROLS</h2>
+      <div class="controls-grid">
+        <div class="control-section">
+          <h3>Player 1</h3>
+          <div class="control-map" id="p1-controls">
+            <div class="control-item"><span>Move Left</span><kbd>A</kbd></div>
+            <div class="control-item"><span>Move Right</span><kbd>D</kbd></div>
+            <div class="control-item"><span>Jump</span><kbd>W</kbd></div>
+            <div class="control-item"><span>Crouch</span><kbd>S</kbd></div>
+            <div class="control-item"><span>Light Attack</span><kbd>J</kbd></div>
+            <div class="control-item"><span>Heavy Attack</span><kbd>K</kbd></div>
+            <div class="control-item"><span>Block</span><kbd>L</kbd></div>
+            <div class="control-item"><span>Special</span><kbd>I</kbd></div>
+            <div class="control-item"><span>Throw</span><kbd>O</kbd></div>
+            <div class="control-item"><span>Dash</span><kbd>Shift</kbd></div>
+          </div>
+        </div>
+        <div class="control-section">
+          <h3>Player 2</h3>
+          <div class="control-map" id="p2-controls">
+            <div class="control-item"><span>Move Left</span><kbd>←</kbd></div>
+            <div class="control-item"><span>Move Right</span><kbd>→</kbd></div>
+            <div class="control-item"><span>Jump</span><kbd>↑</kbd></div>
+            <div class="control-item"><span>Crouch</span><kbd>↓</kbd></div>
+            <div class="control-item"><span>Light Attack</span><kbd>1</kbd></div>
+            <div class="control-item"><span>Heavy Attack</span><kbd>2</kbd></div>
+            <div class="control-item"><span>Block</span><kbd>3</kbd></div>
+            <div class="control-item"><span>Special</span><kbd>4</kbd></div>
+            <div class="control-item"><span>Throw</span><kbd>5</kbd></div>
+            <div class="control-item"><span>Dash</span><kbd>0</kbd></div>
+          </div>
+        </div>
+      </div>
+      <p class="controls-note">Press ESC during fight to pause. Press R to restart round.</p>
+      <div class="select-actions">
+        <button class="menu-btn secondary" data-action="back-menu">Back</button>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+      <canvas id="game-canvas"></canvas>
+      <div id="hud">
+        <div class="hud-player hud-p1">
+          <div class="hud-name" id="hud-p1-name">NINJA</div>
+          <div class="health-bar"><div class="health-fill" id="hud-p1-health"></div></div>
+          <div class="meter-bar"><div class="meter-fill" id="hud-p1-meter"></div></div>
+          <div class="round-wins" id="hud-p1-wins"></div>
+        </div>
+        <div class="hud-center">
+          <div class="timer" id="hud-timer">60</div>
+          <div class="round-info" id="hud-round">ROUND 1</div>
+          <div class="combo-display" id="combo-display"></div>
+        </div>
+        <div class="hud-player hud-p2">
+          <div class="hud-name" id="hud-p2-name">CPU</div>
+          <div class="health-bar"><div class="health-fill" id="hud-p2-health"></div></div>
+          <div class="meter-bar"><div class="meter-fill" id="hud-p2-meter"></div></div>
+          <div class="round-wins" id="hud-p2-wins"></div>
+        </div>
+      </div>
+      <div id="announcement" class="announcement hidden">
+        <span id="announce-text">FIGHT!</span>
+      </div>
+      <div id="pause-menu" class="pause-overlay hidden">
+        <h2>PAUSED</h2>
+        <button class="menu-btn" data-action="resume">Resume</button>
+        <button class="menu-btn" data-action="restart-round">Restart Round</button>
+        <button class="menu-btn secondary" data-action="quit-fight">Quit to Menu</button>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="screen">
+      <h2 class="screen-title" id="results-title">VICTORY!</h2>
+      <div class="results-stats" id="results-stats"></div>
+      <div class="select-actions">
+        <button class="menu-btn" data-action="rematch">Rematch</button>
+        <button class="menu-btn secondary" data-action="back-menu">Main Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/fighter.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/arena.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
