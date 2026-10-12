@@ -1,0 +1,490 @@
+:root {
+  --bg: #6ec6ff;
+  --bg2: #b3e5fc;
+  --ink: #1c2b3a;
+  --accent: #ff7043;
+  --card: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 48px;
+}
+
+.app {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 0 #fff;
+}
+
+.subtitle {
+  margin: 4px 0 12px;
+  opacity: 0.85;
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.cat {
+  width: min(320px, 80vw);
+  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.18));
+  animation: breathe 3.2s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+.cat svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* idle animations */
+.tail {
+  transform-box: view-box;
+  transform-origin: 60px 240px;
+  animation: wag 1.6s ease-in-out infinite;
+}
+
+.eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 5s infinite;
+}
+
+.pupil {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: look 4s ease-in-out infinite;
+}
+
+.brow {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.15s ease;
+}
+
+.cheek {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes wag {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(10deg); }
+}
+
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
+}
+
+@keyframes look {
+  0%, 100% { transform: translateX(0); }
+  40% { transform: translateX(4px); }
+  70% { transform: translateX(-4px); }
+}
+
+/* speaking state */
+.cat.speaking {
+  animation: bob 0.3s ease-in-out infinite;
+}
+
+.cat.speaking .eye {
+  animation: none;
+  transform: scale(1.06);
+}
+
+.cat.speaking .pupil {
+  animation: none;
+  transform: scale(1.15);
+}
+
+.cat.speaking .brow {
+  transform: translateY(-5px) scaleY(1.15);
+}
+
+.cat.speaking .cheek {
+  transform: scale(1);
+  opacity: 0.85;
+}
+
+.cat.speaking .mouth-open {
+  animation: talk 0.24s ease-in-out infinite;
+}
+
+.cat.speaking .tongue {
+  opacity: 1;
+  animation: tongue 0.24s ease-in-out infinite;
+}
+
+.mouth-open {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scaleY(0.08);
+}
+
+.tongue {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  transform: scaleY(0.08);
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-5px) scale(1.02) rotate(-1.5deg); }
+}
+
+@keyframes talk {
+  0%, 100% { transform: scaleY(0.15); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes tongue {
+  0%, 100% { transform: scaleY(0.1); }
+  50% { transform: scaleY(1); }
+}
+
+/* pet action effects */
+.food,
+.hearts,
+.stars,
+.swirl,
+.xeye {
+  opacity: 0;
+}
+
+.swirl,
+.xeye,
+.swirl-ring,
+.heart,
+.star {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.heart,
+.star {
+  opacity: 0;
+}
+
+/* FEED */
+.cat.feed .food {
+  animation: serve 3.2s ease-in-out;
+}
+
+.cat.feed .mouth-open {
+  animation: chew 0.28s ease-in-out infinite;
+}
+
+.cat.feed .tongue {
+  opacity: 1;
+}
+
+.cat.feed .cheek {
+  transform: scale(1);
+  opacity: 0.8;
+}
+
+.cat.feed .hearts {
+  opacity: 1;
+}
+
+.cat.feed .heart {
+  animation: floatUp 2.4s ease-out infinite;
+}
+
+/* CHILL */
+.cat.chill {
+  animation: sway 3s ease-in-out infinite;
+}
+
+.cat.chill .eye {
+  animation: none;
+  transform: scaleY(0.45);
+}
+
+.cat.chill .pupil {
+  animation: none;
+}
+
+.cat.chill .hearts {
+  opacity: 1;
+}
+
+.cat.chill .heart {
+  animation: floatUp 3s ease-out infinite;
+}
+
+/* HYPNO-PET */
+.cat.hypno {
+  animation: sway 2.4s ease-in-out infinite;
+}
+
+.cat.hypno .eye {
+  animation: none;
+}
+
+.cat.hypno .swirl {
+  opacity: 1;
+  animation: swirlPulse 1s ease-in-out infinite;
+}
+
+.cat.hypno .pupil {
+  opacity: 0;
+}
+
+.cat.hypno .swirl-ring {
+  animation: spin 1.1s linear infinite;
+}
+
+/* TICKLE */
+.cat.tickle {
+  animation: giggle 0.16s ease-in-out infinite;
+}
+
+.cat.tickle .eye {
+  transform: scale(1.1);
+}
+
+.cat.tickle .cheek {
+  transform: scale(1.2);
+  opacity: 0.95;
+}
+
+/* SLAP */
+.cat.slap {
+  animation: dazed 0.45s ease-in-out infinite;
+}
+
+.cat.slap .stars {
+  opacity: 1;
+  transform-box: view-box;
+  transform-origin: 170px 100px;
+  animation: spin 1.2s linear infinite;
+}
+
+.cat.slap .star {
+  opacity: 1;
+}
+
+.cat.slap .pupil {
+  opacity: 0;
+}
+
+.cat.slap .xeye {
+  opacity: 1;
+}
+
+.heart.h2,
+.star:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.heart.h3 {
+  animation-delay: 0.8s;
+}
+
+@keyframes serve {
+  0% { opacity: 0; transform: translateY(50px) scale(0.85); }
+  15% { opacity: 1; transform: translateY(0) scale(1); }
+  70% { opacity: 1; transform: translateY(0) scale(1); }
+  88% { opacity: 0; transform: translateY(0) scale(0.6); }
+  100% { opacity: 0; transform: translateY(0) scale(0.6); }
+}
+
+@keyframes chew {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.25); }
+}
+
+@keyframes floatUp {
+  0% { opacity: 0; transform: translateY(24px) scale(0.6); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-64px) scale(1.1); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes swirlPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.82); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes giggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes dazed {
+  0%, 100% { transform: rotate(-4deg) translateX(-3px); }
+  50% { transform: rotate(4deg) translateX(3px); }
+}
+
+/* controls */
+.controls {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #d9e2ec;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: var(--accent);
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+button {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #eceff3;
+  color: var(--ink);
+  transition: transform 0.08s ease, background 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+button.primary:hover {
+  background: #ff5722;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.actions button {
+  flex: 1 1 30%;
+  min-width: 88px;
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+.actions button:hover {
+  background: #d0e8fc;
+}
+
+.sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.sliders input[type="range"] {
+  width: 100%;
+}
+
+.live {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.unsupported {
+  background: #ffebee;
+  color: #b71c1c;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat,
+  .tail,
+  .eye,
+  .pupil,
+  .cat.speaking,
+  .cat.speaking .mouth-open,
+  .cat.speaking .tongue,
+  .cat.feed,
+  .cat.chill,
+  .cat.hypno,
+  .cat.tickle,
+  .cat.slap,
+  .food,
+  .heart,
+  .star,
+  .swirl,
+  .swirl-ring {
+    animation: none;
+  }
+}
